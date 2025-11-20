@@ -1,0 +1,69 @@
+{{ $mainSections := site.Params.mainSections | default (slice "posts") }}
+{{ $pages := where site.RegularPages "Type" "in" $mainSections }}
+{{ $recent := first 5 $pages }}
+
+<article class='w-full max-w-4xl mx-auto'>
+  <section class='py-16 mb-8'>
+    <p class='text-sm font-mono tracking-widest uppercase text-neutral-500 mb-3'>
+      Digital Garden
+    </p>
+    <h1 class='text-4xl md:text-6xl font-extrabold text-neutral-50 mb-6 leading-tight tracking-tight'>
+      Securing Bits.<br/>
+      Optimizing Logic.
+    </h1>
+    <p class='text-xl text-neutral-400 font-light max-w-xl mb-8 leading-relaxed'>
+      Exploring the intersection of cybersecurity and algorithm design through the lens of a reverse engineer.
+    </p>
+    <div class='flex gap-3 text-2xl'>
+      {{ partialCached "author-links.html" . }}
+    </div>
+  </section>
+
+  <section class='mt-4'>
+    <div class='flex justify-between items-end mb-8'>
+      <h2 class='text-2xl font-bold text-neutral-50'>Latest</h2>
+      <a href='{{ `posts/` | relLangURL }}' class='text-sm text-neutral-400 hover:text-neutral transition-colors'>
+        View all
+      </a>
+    </div>
+
+    <div class='space-y-6'>
+      {{ range $recent }}
+        {{ $category := "" }}
+        {{ with .Params.categories }}
+          {{ $category = index . 0 }}
+        {{ end }}
+
+        <article class='bg-neutral-800/80 p-6 md:p-8 rounded-xl border border-transparent hover:border-neutral-600 transition-all cursor-pointer group shadow-sm hover:shadow-md hover:bg-neutral-800/90'>
+          <header class='flex flex-col gap-2 mb-3'>
+            <div class='flex flex-wrap gap-3 text-xs font-medium text-neutral-500 uppercase tracking-wider'>
+              {{ with $category }}
+                <span class='text-primary-400 hover:underline'>
+                  {{ . }}
+                </span>
+                <span>•</span>
+              {{ end }}
+              <span>{{ .Date | time.Format "January 2, 2006" }}</span>
+              <span>•</span>
+              <span>{{ .ReadingTime }}&nbsp;min read</span>
+            </div>
+            <h3 class='text-2xl font-bold text-neutral-50 group-hover:text-primary-300 transition-colors leading-tight'>
+              <a href='{{ .RelPermalink }}' class='not-prose'>
+                {{ .Title | emojify }}
+              </a>
+            </h3>
+          </header>
+
+          <p class='text-neutral-400 mb-6 leading-relaxed line-clamp-2'>
+            {{ .Summary | plainify }}
+          </p>
+
+          <footer class='flex items-center text-sm font-medium text-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300'>
+            Read Article
+            <span class='ml-1'>→</span>
+          </footer>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+</article>

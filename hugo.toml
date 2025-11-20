@@ -1,0 +1,94 @@
+baseURL = "https://void0ps.github.io/"
+languageCode = "zh-cn"
+title = "Void0ps Blog"
+theme = "blowfish"
+defaultContentLanguage = "zh-cn"
+
+[markup]
+  [markup.highlight]
+    style = "dracula"      # 代码高亮风格，类似视频里的深色
+    lineNos = true
+    lineNumbersInTable = false
+    noClasses = false
+
+[params]
+  colorScheme = "blowfish" # 核心配色：深海蓝/黑
+  defaultAppearance = "dark"    # Blowfish 实际使用的字段，强制深色模式
+  autoSwitchAppearance = false   # 不跟随系统切换，始终以站点为准
+  enableSearch = true      # 开启搜索
+
+ # --- 开启页面平滑切换动画 ---
+  enableUiAnimation = true 
+  animationDuration = "0.3s" # 0.3秒的切入速度，比较干脆，像黑客终端
+
+  # --- 确保加载你的自定义 CSS ---
+  # 如果没有这一行，上面的 custom.css 不会生效！
+  customCSS = ["css/custom.css"] 
+  # --- 核心：首页布局设置 ---
+  [params.homepage]
+    layout = "alex"        # 使用我们自定义的 alex 首页布局
+    showRecent = true      # 显示最近文章
+    cardView = true        # 文章以卡片形式显示
+    cardViewScreenWidth = false
+
+  # --- 核心：头部菜单 ---
+  [params.header]
+    layout = "basic"       # 顶部菜单样式
+
+  # --- 核心：页脚 ---
+  [params.footer]
+    showScrollToTop = true
+
+# --- 核心：作者信息（显示在首页左侧） ---
+[languages]
+  [languages.zh-cn]
+    languageName = "简体中文"
+    title = "Void0ps 的极客空间"
+    
+    [languages.zh-cn.params]
+      displayName = "ZH"
+      isoCode = "zh-cn"
+      rtl = false
+      
+    [languages.zh-cn.params.author]
+      name = "Void0ps"
+      image = "me.jpg"      # ★重要：你需要放一张图片叫 me.jpg 到 assets 文件夹
+      headline = "这里是我的赛博自留地" # 头像下的第一行字
+      bio = "热爱 coding，折腾 Hugo，探索未知。" # 头像下的第二行字
+      links = [             # 社交链接图标
+        { icon = "github", link = "https://github.com/你的用户名" },
+        { icon = "twitter", link = "https://twitter.com/你的用户名" }
+      ]
+
+# --- 顶部菜单项 ---
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    pre = "code"          # 顶栏 "Home" 图标
+    weight = 10
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    pre = "list"          # 类别图标
+    weight = 20
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    pre = "tag"           # 标签图标
+    weight = 30
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/posts/"
+    pre = "list"          # 归档图标（复用 list ）
+    weight = 40
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    pre = "circle-info"   # About 图标
+    weight = 50

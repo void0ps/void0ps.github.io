@@ -1,0 +1,62 @@
+{{ $disableImageOptimization := .Site.Params.disableImageOptimization | default false }}
+<aside class="sidebar-profile flex flex-col shrink-0 justify-between w-72 xl:w-80 pe-8 py-10 border-r border-neutral-900/60 bg-neutral-900/40">
+  <div>
+    <header class="flex flex-col items-start gap-4 mb-10">
+      {{ with .Site.Params.Author.image }}
+        {{ $authorImage := "" }}
+        {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+          {{ $authorImage = resources.GetRemote . }}
+        {{ else }}
+          {{ $authorImage = resources.Get . }}
+        {{ end }}
+        {{ if $authorImage }}
+          {{ $final := $authorImage }}
+          {{ if not $disableImageOptimization }}
+            {{ $final = $authorImage.Fill (print "192x192 q" ( $.Site.Params.Author.imagequality | default "96" )) }}
+          {{ end }}
+          <img
+            class="h-20 w-20 rounded-full shadow-lg object-cover"
+            width="80"
+            height="80"
+            alt="{{ $.Site.Params.Author.name | default `Author` }}"
+            src="{{ $final.RelPermalink }}"
+            data-zoom-src="{{ $authorImage.RelPermalink }}">
+        {{ end }}
+      {{ end }}
+
+      <div>
+        <p class="text-xs font-mono tracking-[0.25em] text-primary-300 mb-2">
+          DIGITAL GARDEN
+        </p>
+        <h2 class="text-2xl font-bold text-neutral-50 leading-snug">
+          {{ .Site.Params.Author.name | default .Site.Title }}
+        </h2>
+        {{ with .Site.Params.Author.headline }}
+          <p class="text-sm text-neutral-400 mt-1">
+            {{ . | markdownify }}
+          </p>
+        {{ end }}
+        {{ with .Site.Params.Author.bio }}
+          <p class="mt-3 text-sm text-neutral-400 sidebar-typewriter" data-text="{{ . }}">
+            {{ . }}
+          </p>
+        {{ end }}
+      </div>
+    </header>
+
+    <nav class="flex flex-col gap-1 text-sm font-medium text-neutral-400">
+      {{ range .Site.Menus.main }}
+        <a
+          href="{{ .URL }}"
+          {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}target="_blank"{{ end }}
+          class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-900/70 hover:text-neutral-100 transition-colors {{ if or ($.IsMenuCurrent `main` .) ($.HasMenuCurrent `main` .) }}text-neutral-100 bg-neutral-900/80{{ end }}">
+          <span>{{ .Name | markdownify }}</span>
+        </a>
+      {{ end }}
+    </nav>
+  </div>
+
+  <div class="mt-10 text-xs text-neutral-600">
+    <p>© {{ now.Year }} {{ .Site.Title }}</p>
+  </div>
+</aside>
