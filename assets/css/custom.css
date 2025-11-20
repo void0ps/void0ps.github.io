@@ -160,13 +160,21 @@ html.dark .article-content {
     margin-top: 1.75rem;
     padding: 2.5rem 2.75rem;
     border-radius: 1.75rem;
-    background-color: #2e3033;
+    background-color: #111827; /* 比代码块略亮，突出代码区域 */
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9);
     border: 1px solid rgba(88, 28, 135, 0.55);
 }
 
+html.dark .article-content.prose {
+    width: 100%;
+    max-width: 100%;
+}
+
 html.dark .article-content pre {
     border-radius: 1.25rem;
+    background-color: #020617; /* 几乎纯黑，让代码块更突出 */
+    border: 1px solid rgba(129, 140, 248, 0.8);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.9);
 }
 
 /* 左侧侧边栏中的打字机简介效果 */
@@ -263,7 +271,7 @@ body.layout-list .main-menu {
 
 body.layout-article .sidebar-profile,
 body.layout-list .sidebar-profile {
-    transform: translate(-90px, -30px) scale(0.7);
+    transform: translate(-40px, -20px) scale(0.8);
     opacity: 0;
 }
 
@@ -277,6 +285,6 @@ body.layout-list.nav-animate .main-menu {
 
 body.layout-article.nav-animate .sidebar-profile,
 body.layout-list.nav-animate .sidebar-profile {
-    transform: translate(0, 0) scale(1.02);
+    transform: translate(0, 0) scale(1);
     opacity: 1;
 }

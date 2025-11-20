@@ -1,21 +1,70 @@
 {{ $mainSections := site.Params.mainSections | default (slice "posts") }}
 {{ $pages := where site.RegularPages "Type" "in" $mainSections }}
 {{ $recent := first 5 $pages }}
+{{ $disableImageOptimization := .Site.Params.disableImageOptimization | default false }}
 
-<article class='w-full max-w-4xl mx-auto'>
+<article class='w-full max-w-5xl mx-auto'>
   <section class='py-16 mb-8'>
-    <p class='text-sm font-mono tracking-widest uppercase text-neutral-500 mb-3'>
-      Digital Garden
-    </p>
-    <h1 class='text-4xl md:text-6xl font-extrabold text-neutral-50 mb-6 leading-tight tracking-tight'>
-      Securing Bits.<br/>
-      Optimizing Logic.
-    </h1>
-    <p class='text-xl text-neutral-400 font-light max-w-xl mb-8 leading-relaxed'>
-      Exploring the intersection of cybersecurity and algorithm design through the lens of a reverse engineer.
-    </p>
-    <div class='flex gap-3 text-2xl'>
-      {{ partialCached "author-links.html" . }}
+    <div class='relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900/95 via-neutral-900/85 to-slate-900/85 px-6 sm:px-10 py-10 sm:py-12 shadow-[0_30px_80px_rgba(0,0,0,0.9)]'>
+      <div class='flex flex-col md:flex-row items-start md:items-center gap-8'>
+        <div class='flex items-center gap-5'>
+          {{ with .Site.Params.Author.image }}
+            {{ $authorImage := "" }}
+            {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+              {{ $authorImage = resources.GetRemote . }}
+            {{ else }}
+              {{ $authorImage = resources.Get . }}
+            {{ end }}
+            {{ if $authorImage }}
+              {{ if $disableImageOptimization }}
+                <img
+                  src='{{ $authorImage.RelPermalink }}'
+                  alt='{{ site.Params.Author.name | default "Void0ps" }}'
+                  class='h-16 w-16 rounded-full border border-neutral-700/80 shadow-[0_18px_45px_rgba(0,0,0,0.95)] object-cover' />
+              {{ else }}
+                {{ with $authorImage.Fill "200x200 smart" }}
+                  <img
+                    src='{{ .RelPermalink }}'
+                    width='{{ .Width }}'
+                    height='{{ .Height }}'
+                    alt='{{ site.Params.Author.name | default "Void0ps" }}'
+                    class='h-16 w-16 rounded-full border border-neutral-700/80 shadow-[0_18px_45px_rgba(0,0,0,0.95)] object-cover' />
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+
+          <div>
+            <p class='text-xs font-mono tracking-[0.3em] uppercase text-primary-300 mb-2'>
+              Digital Garden
+            </p>
+            <h1 class='text-3xl md:text-4xl font-extrabold text-neutral-50 leading-tight'>
+              {{ with site.Params.Author.name }}
+                {{ . }}
+              {{ else }}
+                Void0ps
+              {{ end }}
+            </h1>
+            {{ with site.Params.Author.headline }}
+              <p class='mt-1 text-sm text-neutral-400'>
+                {{ . }}
+              </p>
+            {{ end }}
+          </div>
+        </div>
+
+        <div class='md:flex-1 md:max-w-xl'>
+          <p
+            class='sidebar-typewriter text-base sm:text-lg md:text-xl text-neutral-200 font-light leading-relaxed'
+            data-text='{{ site.Params.heroTagline | default "Exploring offensive security, exploit development and algorithmic thinking." }}'>
+            {{ site.Params.heroTagline | default "Exploring offensive security, exploit development and algorithmic thinking." }}
+          </p>
+        </div>
+      </div>
+
+      <div class='mt-8 flex flex-wrap items-center gap-4 text-lg text-neutral-300/90'>
+        {{ partialCached "author-links.html" . }}
+      </div>
     </div>
   </section>
 
