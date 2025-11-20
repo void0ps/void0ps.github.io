@@ -29,7 +29,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.128.0 # 建议指定一个较新的版本，或者用 'latest'
+      # 使用满足 Blowfish 主题要求的 Hugo 版本（支持 try 等新模板函数）
+      HUGO_VERSION: 0.152.2
     steps:
       - name: Install Hugo CLI
         run: |
