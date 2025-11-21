@@ -2,12 +2,35 @@
 {{ $pages := where site.RegularPages "Type" "in" $mainSections }}
 {{ $recent := first 5 $pages }}
 {{ $disableImageOptimization := .Site.Params.disableImageOptimization | default false }}
-
-<article class='w-full max-w-5xl mx-auto'>
-  <section class='py-16 mb-8'>
-    <div class='relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900/95 via-neutral-900/85 to-slate-900/85 px-6 sm:px-10 py-10 sm:py-12 shadow-[0_30px_80px_rgba(0,0,0,0.9)]'>
-      <div class='flex flex-col md:flex-row items-start md:items-center gap-8'>
-        <div class='flex items-center gap-5'>
+<article class="v0-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        {{ .Site.Params.heroTitle | default "Hi, I'm void0ps." }}
+      </h1>
+      <p class="hero-bio">
+        {{ .Site.Params.heroBio | default "一个热爱网络安全的研究员，专注于 Web 渗透、红队行动、免杀对抗。喜欢在数字世界的边缘游走，探索未知的漏洞与防御机制。" }}
+      </p>
+      <div class="social-links">
+        {{ with .Site.Params.Author.links }}
+          {{ range . }}
+            {{ $link := .link }}
+            {{ if $link }}
+              <a href="{{ $link }}" class="social-btn" target="_blank" rel="noopener">
+                {{ with .icon }}
+                  {{ . | title }}
+                {{ else }}
+                  Link
+                {{ end }}
+              </a>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+    <div class="hero-avatar-container">
+      <div class="avatar-frame">
+        <div class="avatar-inner">
           {{ with .Site.Params.Author.image }}
             {{ $authorImage := "" }}
             {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
@@ -18,99 +41,47 @@
             {{ if $authorImage }}
               {{ if $disableImageOptimization }}
                 <img
-                  src='{{ $authorImage.RelPermalink }}'
-                  alt='{{ site.Params.Author.name | default "Void0ps" }}'
-                  class='h-16 w-16 rounded-full border border-neutral-700/80 shadow-[0_18px_45px_rgba(0,0,0,0.95)] object-cover' />
+                  src="{{ $authorImage.RelPermalink }}"
+                  alt="{{ .Site.Params.Author.name | default .Site.Title }}"
+                  class="hero-avatar-img" />
               {{ else }}
-                {{ with $authorImage.Fill "200x200 smart" }}
+                {{ with $authorImage.Fill "280x280 smart" }}
                   <img
-                    src='{{ .RelPermalink }}'
-                    width='{{ .Width }}'
-                    height='{{ .Height }}'
-                    alt='{{ site.Params.Author.name | default "Void0ps" }}'
-                    class='h-16 w-16 rounded-full border border-neutral-700/80 shadow-[0_18px_45px_rgba(0,0,0,0.95)] object-cover' />
+                    src="{{ .RelPermalink }}"
+                    width="{{ .Width }}"
+                    height="{{ .Height }}"
+                    alt="{{ $.Site.Params.Author.name | default $.Site.Title }}"
+                    class="hero-avatar-img" />
                 {{ end }}
               {{ end }}
             {{ end }}
           {{ end }}
-
-          <div>
-            <p class='text-xs font-mono tracking-[0.3em] uppercase text-primary-300 mb-2'>
-              Digital Garden
-            </p>
-            <h1 class='text-3xl md:text-4xl font-extrabold text-neutral-50 leading-tight'>
-              {{ with site.Params.Author.name }}
-                {{ . }}
-              {{ else }}
-                Void0ps
-              {{ end }}
-            </h1>
-            {{ with site.Params.Author.headline }}
-              <p class='mt-1 text-sm text-neutral-400'>
-                {{ . }}
-              </p>
-            {{ end }}
-          </div>
         </div>
-
-        <div class='md:flex-1 md:max-w-xl'>
-          <p
-            class='sidebar-typewriter text-base sm:text-lg md:text-xl text-neutral-200 font-light leading-relaxed'
-            data-text='{{ site.Params.heroTagline | default "Exploring offensive security, exploit development and algorithmic thinking." }}'>
-            {{ site.Params.heroTagline | default "Exploring offensive security, exploit development and algorithmic thinking." }}
-          </p>
-        </div>
-      </div>
-
-      <div class='mt-8 flex flex-wrap items-center gap-4 text-lg text-neutral-300/90'>
-        {{ partialCached "author-links.html" . }}
       </div>
     </div>
   </section>
 
-  <section class='mt-4'>
-    <div class='flex justify-between items-end mb-8'>
-      <h2 class='text-2xl font-bold text-neutral-50'>Latest</h2>
-      <a href='{{ `posts/` | relLangURL }}' class='text-sm text-neutral-400 hover:text-neutral transition-colors'>
-        View all
-      </a>
-    </div>
-
-    <div class='space-y-6'>
+  <section class="posts-section">
+    <h2 class="section-title">// 最新情报 [Recent_Logs]</h2>
+    <div class="posts-grid">
       {{ range $recent }}
         {{ $category := "" }}
         {{ with .Params.categories }}
           {{ $category = index . 0 }}
         {{ end }}
-
-        <article class='bg-neutral-800/80 p-6 md:p-8 rounded-xl border border-transparent hover:border-neutral-600 transition-all cursor-pointer group shadow-sm hover:shadow-md hover:bg-neutral-800/90'>
-          <header class='flex flex-col gap-2 mb-3'>
-            <div class='flex flex-wrap gap-3 text-xs font-medium text-neutral-500 uppercase tracking-wider'>
-              {{ with $category }}
-                <span class='text-primary-400 hover:underline'>
-                  {{ . }}
-                </span>
-                <span>•</span>
-              {{ end }}
-              <span>{{ .Date | time.Format "January 2, 2006" }}</span>
-              <span>•</span>
-              <span>{{ .ReadingTime }}&nbsp;min read</span>
-            </div>
-            <h3 class='text-2xl font-bold text-neutral-50 group-hover:text-primary-300 transition-colors leading-tight'>
-              <a href='{{ .RelPermalink }}' class='not-prose'>
-                {{ .Title | emojify }}
-              </a>
-            </h3>
-          </header>
-
-          <p class='text-neutral-400 mb-6 leading-relaxed line-clamp-2'>
-            {{ .Summary | plainify }}
+        <article class="post-card">
+          <h3 class="post-title">
+            <a href="{{ .RelPermalink }}">
+              {{ .Title | emojify }}
+            </a>
+          </h3>
+          <div class="post-meta">
+            {{ .Date | time.Format "2006-01-02" }}
+            {{ with $category }} | #{{ . }}{{ end }}
+          </div>
+          <p class="post-summary line-clamp-2">
+            {{ .Summary | plainify | truncate 120 }}
           </p>
-
-          <footer class='flex items-center text-sm font-medium text-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300'>
-            Read Article
-            <span class='ml-1'>→</span>
-          </footer>
         </article>
       {{ end }}
     </div>

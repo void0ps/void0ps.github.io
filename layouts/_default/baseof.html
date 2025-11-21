@@ -20,6 +20,21 @@
     {{ $pageLayout = "layout-list" }}
   {{ end }}
   <body class="{{ $bodyLayout }} {{ $bodyColor }} {{ $bodyScrollbar }} {{ $pageLayout }}">
+    {{ if .IsHome }}
+      <div id="loader-overlay" class="v0-loader-overlay">
+        <div class="loader-content">
+          <div class="terminal-boot-log" id="boot-log"></div>
+          <div class="progress-wrapper">
+            <div class="progress-label">
+              <span>System Initialization</span>
+              <span id="progress-pct">0%</span>
+            </div>
+            <div class="progress-bar-bg" id="progress-blocks-container"></div>
+          </div>
+        </div>
+        <div class="access-granted" id="access-msg">ACCESS GRANTED</div>
+      </div>
+    {{ end }}
     <div id="the-top" class="absolute flex self-center">
       <a
         class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
@@ -88,6 +103,132 @@
           }
         }
         tick();
+      })();
+
+      (function () {
+        var overlay = document.getElementById('loader-overlay');
+        if (!overlay) return;
+
+        var body = document.body;
+        var isHome = body && body.classList.contains('layout-home');
+
+        // 仅在首页首次访问时展示加载动画
+        if (!isHome) {
+          overlay.parentNode.removeChild(overlay);
+          return;
+        }
+
+        try {
+          if (window.sessionStorage && sessionStorage.getItem('v0_loader_shown') === '1') {
+            overlay.parentNode.removeChild(overlay);
+            return;
+          }
+        } catch (e) {
+          // ignore storage errors
+        }
+
+        var logContainer = document.getElementById('boot-log');
+        var blocksContainer = document.getElementById('progress-blocks-container');
+        var progressText = document.getElementById('progress-pct');
+        var accessMsg = document.getElementById('access-msg');
+
+        var bootLogs = [
+          'Initializing kernel...',
+          'Loading modules: [crypto, net, fs]...',
+          'Bypassing mainframe firewall...',
+          '<span class="log-success">[OK]</span> Root access established',
+          'Mounting file system /dev/sda1...',
+          'Decrypting user interface config...',
+          'Scanning for vulnerabilities...',
+          '<span class="log-warn">[WARN]</span> Intrusion detection system disabled',
+          'Loading graphical shell...',
+          'Executing startup script: ./init_blog.sh...'
+        ];
+
+        var TOTAL_BLOCKS = 20;
+
+        function initBlocks() {
+          if (!blocksContainer) return;
+          blocksContainer.innerHTML = '';
+          for (var i = 0; i < TOTAL_BLOCKS; i++) {
+            var block = document.createElement('div');
+            block.className = 'progress-block';
+            blocksContainer.appendChild(block);
+          }
+        }
+
+        function updateBlocks(percent) {
+          if (!blocksContainer) return;
+          var blocksToFill = Math.floor((percent / 100) * TOTAL_BLOCKS);
+          var blocks = blocksContainer.children;
+          for (var i = 0; i < blocks.length; i++) {
+            if (i < blocksToFill) {
+              blocks[i].classList.add('active');
+            }
+          }
+        }
+
+        function startLoader() {
+          initBlocks();
+
+          var progress = 0;
+          var logIndex = 0;
+
+          var progressInterval = window.setInterval(function () {
+            progress += Math.random() * 5 + 1;
+            if (progress > 100) progress = 100;
+            updateBlocks(progress);
+            if (progressText) {
+              progressText.innerText = String(Math.floor(progress)) + '%';
+            }
+            if (progress === 100) {
+              window.clearInterval(progressInterval);
+              finishLoading();
+            }
+          }, 40);
+
+          var logInterval = window.setInterval(function () {
+            if (!logContainer) {
+              window.clearInterval(logInterval);
+              return;
+            }
+            if (logIndex < bootLogs.length) {
+              var line = document.createElement('div');
+              line.className = 'log-line';
+              line.innerHTML = '&gt; ' + bootLogs[logIndex];
+              logContainer.appendChild(line);
+              logContainer.scrollTop = logContainer.scrollHeight;
+              logIndex++;
+            } else {
+              window.clearInterval(logInterval);
+            }
+          }, 90);
+        }
+
+        function finishLoading() {
+          if (!overlay) return;
+          window.setTimeout(function () {
+            if (accessMsg) {
+              accessMsg.style.display = 'block';
+            }
+            window.setTimeout(function () {
+              overlay.style.transition = 'opacity 0.4s ease-out';
+              overlay.style.opacity = '0';
+            }, 600);
+            window.setTimeout(function () {
+              overlay.style.display = 'none';
+            }, 1000);
+          }, 120);
+          try {
+            if (window.sessionStorage) {
+              sessionStorage.setItem('v0_loader_shown', '1');
+            }
+          } catch (e) {
+            // ignore storage errors
+          }
+        }
+
+        window.addEventListener('load', startLoader);
       })();
     </script>
   </body>

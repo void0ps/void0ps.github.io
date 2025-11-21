@@ -6,81 +6,72 @@
     {{ $category = index . 0 }}
   {{ end }}
 
-  <article class='w-full flex-1 mt-10 md:mt-16'>
-    <a
-      href='{{ "" | relLangURL }}'
-      class='group inline-flex items-center gap-2 text-neutral-500 hover:text-neutral mb-10 transition-colors text-sm font-medium'>
-      <span class='inline-flex items-center justify-center w-6 h-6 rounded-full bg-neutral-800 group-hover:bg-neutral-700'>
-        ←
-      </span>
-      <span>Back to Home</span>
-    </a>
-
-    <header class='mb-12 text-center md:text-left'>
-      <div class='flex flex-wrap gap-3 text-sm font-mono text-primary-400 mb-4 justify-center md:justify-start uppercase tracking-wide'>
-        {{ with $category }}
-          <span class='bg-primary-500/10 px-2 py-1 rounded'>
-            {{ . }}
-          </span>
-          <span class='py-1 text-neutral-500'>•</span>
-        {{ end }}
-        <span class='py-1 text-neutral-500'>
-          {{ .ReadingTime }}&nbsp;min read
-        </span>
-      </div>
-      <h1 class='text-4xl md:text-5xl font-extrabold text-neutral mb-6 leading-tight'>
-        {{ .Title | emojify }}
-      </h1>
-      <div class='text-neutral-500 text-sm border-y border-neutral-800 py-4 flex flex-col md:flex-row md:justify-between md:items-center font-mono gap-2'>
-        <span>{{ .Date | time.Format "January 2, 2006" }}</span>
-        <span>
-          Author:
-          {{ with .Params.author }}
-            {{ . }}
-          {{ else }}
-            {{ with site.Params.Author.name }}
-              {{ . }}
-            {{ else }}
-              {{ site.Author.name | default "Void0ps" }}
+  <article class="v0-container">
+    <div class="article-layout">
+      <article>
+        <header class="article-header">
+          <div class="article-meta-row">
+            <span>[{{ .Date | time.Format "2006-01-02" }}]</span>
+            {{ with $category }}
+              <span>[Category: {{ . }}]</span>
             {{ end }}
+          </div>
+          <h1 class="article-main-title">
+            {{ .Title | emojify }}
+          </h1>
+          {{ with .Params.tags }}
+            <div class="v0-article-tags-row">
+              {{ range . }}
+                <span class="v0-article-tag">#{{ . }}</span>
+              {{ end }}
+            </div>
           {{ end }}
-        </span>
-      </div>
-    </header>
+        </header>
 
-    <section class='article-content prose dark:prose-invert prose-lg max-w-none text-neutral-300'>
-      {{ .Content }}
-    </section>
-
-    {{ with .Params.tags }}
-      <div class='mt-16 pt-8 border-t border-neutral-800'>
-        <div class='flex flex-wrap items-center gap-2'>
-          <span class='text-sm text-neutral-500 mr-2'>Tags:</span>
-          {{ range . }}
-            <a href='{{ (printf "/tags/%s/" (urlize .)) | relLangURL }}' class='text-xs bg-neutral-900 text-neutral-300 px-3 py-1 rounded-full hover:bg-neutral-700 hover:text-neutral transition-colors'>
-              #{{ . }}
-            </a>
-          {{ end }}
+        <div class="article-content prose dark:prose-invert prose-lg max-w-none">
+          {{ .Content }}
         </div>
-      </div>
-    {{ end }}
 
-    {{/* 保留 Blowfish 统计脚本，防止功能丢失 */}}
-    {{ $translations := .AllTranslations }}
-    {{ with .File }}
-      {{ $path := .Path }}
-      {{ range $translations }}
-        {{ $lang := print "."  .Lang  ".md" }}
-        {{ $path = replace $path $lang ".md" }}
-      {{ end }}
-      {{ $jsPage := resources.Get "js/page.js" }}
-      {{ $jsPage = $jsPage | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
-      <script
-        type='text/javascript'
-        src='{{ $jsPage.RelPermalink }}'
-        integrity='{{ $jsPage.Data.Integrity }}'
-        data-oid='views_{{ $path }}'
-        data-oid-likes='likes_{{ $path }}'></script>
-    {{ end }}
+        {{ with .Params.tags }}
+          <div class="mt-10 pt-6 border-t border-neutral-800">
+            <div class="flex flex-wrap items-center gap-2 text-sm">
+              <span class="text-neutral-500 mr-2">Tags:</span>
+              {{ range . }}
+                <a href='{{ (printf "/tags/%s/" (urlize .)) | relLangURL }}' class='text-xs bg-neutral-900 text-neutral-300 px-3 py-1 rounded-full hover:bg-neutral-700 hover:text-neutral transition-colors'>
+                  #{{ . }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+
+        {{/* 保留 Blowfish 统计脚本，防止功能丢失 */}}
+        {{ $translations := .AllTranslations }}
+        {{ with .File }}
+          {{ $path := .Path }}
+          {{ range $translations }}
+            {{ $lang := print "."  .Lang  ".md" }}
+            {{ $path = replace $path $lang ".md" }}
+          {{ end }}
+          {{ $jsPage := resources.Get "js/page.js" }}
+          {{ $jsPage = $jsPage | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
+          <script
+            type='text/javascript'
+            src='{{ $jsPage.RelPermalink }}'
+            integrity='{{ $jsPage.Data.Integrity }}'
+            data-oid='views_{{ $path }}'
+            data-oid-likes='likes_{{ $path }}'></script>
+        {{ end }}
+      </article>
+
+      <aside class="toc-sidebar">
+        {{ with .TableOfContents }}
+          <div class="toc-container">
+            <div class="toc-title">// 导航 [INDEX]</div>
+            {{ . | safeHTML }}
+          </div>
+        {{ end }}
+      </aside>
+    </div>
   </article>
 {{ end }}

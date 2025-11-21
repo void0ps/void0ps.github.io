@@ -1,0 +1,6 @@
+{{- $content := .Inner | markdownify -}}
+{{- $plain := .Inner | plainify -}}
+
+<div class="sidebar-typewriter" data-text="{{ $plain | htmlEscape }}">
+  {{ $content | safeHTML }}
+</div>

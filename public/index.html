@@ -119,8 +119,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.f468447969d28c3f464d7c4e082d1f630dbd25c0b51c4249950f3e095de4fa17fd8a075a25c3d4fe5b2703c3e2396c8ebeeb2d434a9681d703edba572db92ae9.css"
-    integrity="sha512-9GhEeWnSjD9GTXxOCC0fYw29JcC1HEJJlQ8&#43;CV3k&#43;hf9igdaJcPU/lsnA8PiOWyOvustQ0qWgdcD7bpXLbkq6Q==">
+    href="/css/main.bundle.min.c73a9f8e8f7d4c884bb5a7f1be30134423833ae14b418125eb62b8df3c8852e5057b2f9bc0cbcb0b5dbd424270a9a2ed13884143e81db969d30d07c54f9740d9.css"
+    integrity="sha512-xzqfjo99TIhLtafxvjATRCODOuFLQYEl62K43zyIUuUFey&#43;bwMvLC129QkJwqaLtE4hBQ&#43;gduWnTDQfFT5dA2Q==">
 
   
   
@@ -278,6 +278,21 @@
     
   
   <body class="flex flex-col h-screen leading-7 px-4 sm:px-8 lg:px-16 xl:px-20 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 layout-home">
+    
+      <div id="loader-overlay" class="v0-loader-overlay">
+        <div class="loader-content">
+          <div class="terminal-boot-log" id="boot-log"></div>
+          <div class="progress-wrapper">
+            <div class="progress-label">
+              <span>System Initialization</span>
+              <span id="progress-pct">0%</span>
+            </div>
+            <div class="progress-bar-bg" id="progress-blocks-container"></div>
+          </div>
+        </div>
+        <div class="access-granted" id="access-msg">ACCESS GRANTED</div>
+      </div>
+    
     <div id="the-top" class="absolute flex self-center">
       <a
         class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
@@ -289,387 +304,40 @@
 
     
     
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div
-  class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0">
-  
-  
-
-  <div class="flex flex-1 items-center justify-between">
-    <nav class="flex space-x-3">
-      
-        <a href="/" class="text-base font-medium">
-          Void0ps 的极客空间
-        </a>
-      
-    </nav>
+      <header class="v0-container">
+  <div class="site-header">
     
-  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
-    
-      
+      <a href='/' class="terminal-logo">
         
-  <a
-  href="/"
-  
-  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-  aria-label="Home"
-  title="">
-  
-    <span class="mr-1">
-      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
-<path fill="currentColor"  d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span>
-    </span>
-  
-  
-    <p class="text-base font-medium">
-      Home
-    </p>
-  
-</a>
-
-
-
-      
+          Void0ps
         
-  <a
-  href="/categories/"
-  
-  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-  aria-label="Categories"
-  title="">
-  
-    <span class="mr-1">
-      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"/></svg>
-</span>
-    </span>
-  
-  
-    <p class="text-base font-medium">
-      Categories
-    </p>
-  
-</a>
-
-
-
-      
+      </a>
+      <nav class="nav-links">
         
-  <a
-  href="/tags/"
-  
-  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-  aria-label="Tags"
-  title="">
-  
-    <span class="mr-1">
-      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M48 32H197.5C214.5 32 230.7 38.74 242.7 50.75L418.7 226.7C443.7 251.7 443.7 292.3 418.7 317.3L285.3 450.7C260.3 475.7 219.7 475.7 194.7 450.7L18.75 274.7C6.743 262.7 0 246.5 0 229.5V80C0 53.49 21.49 32 48 32L48 32zM112 176C129.7 176 144 161.7 144 144C144 126.3 129.7 112 112 112C94.33 112 80 126.3 80 144C80 161.7 94.33 176 112 176z"/></svg>
-</span>
-    </span>
-  
-  
-    <p class="text-base font-medium">
-      Tags
-    </p>
-  
-</a>
-
-
-
-      
+          <a href='/'>
+            Home
+          </a>
         
-  <a
-  href="/posts/"
-  
-  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-  aria-label="Archives"
-  title="">
-  
-    <span class="mr-1">
-      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"/></svg>
-</span>
-    </span>
-  
-  
-    <p class="text-base font-medium">
-      Archives
-    </p>
-  
-</a>
-
-
-
-      
+          <a href='/categories/'>
+            Categories
+          </a>
         
-  <a
-  href="/about/"
-  
-  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-  aria-label="About"
-  title="">
-  
-    <span class="mr-1">
-      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
-</span>
-    </span>
-  
-  
-    <p class="text-base font-medium">
-      About
-    </p>
-  
-</a>
-
-
-
-      
-    
-
-    
-
-    
-
-    
-      <button
-        id="search-button"
-        aria-label="Search"
-        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
-        title="搜索 (/)">
-        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
-</span>
-      </button>
-    
-
-    
-      <div class=" flex items-center">
-        <button
-          id="appearance-switcher"
-          aria-label="Dark mode switcher"
-          type="button"
-          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
-          <div class="flex items-center justify-center dark:hidden">
-            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
-</span>
-          </div>
-          <div class="items-center justify-center hidden dark:flex">
-            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
-</span>
-          </div>
-        </button>
-      </div>
-    
-  </nav>
-
-    
-  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
-    <span></span>
-
-    
-
-    
-
-    
-      <button
-        id="search-button-mobile"
-        aria-label="Search"
-        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
-        title="搜索 (/)">
-        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
-</span>
-      </button>
-    
-
-    
-      <button
-        id="appearance-switcher-mobile"
-        aria-label="Dark mode switcher"
-        type="button"
-        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
-        <div class="flex items-center justify-center dark:hidden">
-          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
-</span>
-        </div>
-        <div class="items-center justify-center hidden dark:flex">
-          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
-</span>
-        </div>
-      </button>
+          <a href='/tags/'>
+            Tags
+          </a>
+        
+          <a href='/posts/'>
+            Archives
+          </a>
+        
+          <a href='/about/'>
+            About
+          </a>
+        
+      </nav>
     
   </div>
-
-  </div>
-  
-  <div class="-my-2 md:hidden">
-    <div id="menu-button" class="block">
-      
-        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
-          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
-</span>
-        </div>
-        <div
-          id="menu-wrapper"
-          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
-          <ul
-            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
-            <li id="menu-close-button">
-              <span
-                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
-                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
-</span>
-              </span>
-            </li>
-
-            
-              
-  <li class="mt-1">
-  <a
-    href="/"
-    
-    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-    aria-label="Home"
-    title="">
-    
-      <div class="mr-2">
-        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
-<path fill="currentColor"  d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span>
-      </div>
-    
-    
-      <p class="text-bg font-bg">
-        Home
-      </p>
-    
-  </a>
-</li>
-
-
-
-            
-              
-  <li class="mt-1">
-  <a
-    href="/categories/"
-    
-    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-    aria-label="Categories"
-    title="">
-    
-      <div class="mr-2">
-        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"/></svg>
-</span>
-      </div>
-    
-    
-      <p class="text-bg font-bg">
-        Categories
-      </p>
-    
-  </a>
-</li>
-
-
-
-            
-              
-  <li class="mt-1">
-  <a
-    href="/tags/"
-    
-    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-    aria-label="Tags"
-    title="">
-    
-      <div class="mr-2">
-        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M48 32H197.5C214.5 32 230.7 38.74 242.7 50.75L418.7 226.7C443.7 251.7 443.7 292.3 418.7 317.3L285.3 450.7C260.3 475.7 219.7 475.7 194.7 450.7L18.75 274.7C6.743 262.7 0 246.5 0 229.5V80C0 53.49 21.49 32 48 32L48 32zM112 176C129.7 176 144 161.7 144 144C144 126.3 129.7 112 112 112C94.33 112 80 126.3 80 144C80 161.7 94.33 176 112 176z"/></svg>
-</span>
-      </div>
-    
-    
-      <p class="text-bg font-bg">
-        Tags
-      </p>
-    
-  </a>
-</li>
-
-
-
-            
-              
-  <li class="mt-1">
-  <a
-    href="/posts/"
-    
-    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-    aria-label="Archives"
-    title="">
-    
-      <div class="mr-2">
-        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"/></svg>
-</span>
-      </div>
-    
-    
-      <p class="text-bg font-bg">
-        Archives
-      </p>
-    
-  </a>
-</li>
-
-
-
-            
-              
-  <li class="mt-1">
-  <a
-    href="/about/"
-    
-    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
-    aria-label="About"
-    title="">
-    
-      <div class="mr-2">
-        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
-</span>
-      </div>
-    
-    
-      <p class="text-bg font-bg">
-        About
-      </p>
-    
-  </a>
-</li>
-
-
-
-            
-
-          </ul>
-          
-        </div>
-      
-    </div>
-  </div>
-
-</div>
-
-
-
-
+</header>
 
     
 
@@ -685,12 +353,42 @@
 
 
 
-
-<article class='w-full max-w-5xl mx-auto'>
-  <section class='py-16 mb-8'>
-    <div class='relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900/95 via-neutral-900/85 to-slate-900/85 px-6 sm:px-10 py-10 sm:py-12 shadow-[0_30px_80px_rgba(0,0,0,0.9)]'>
-      <div class='flex flex-col md:flex-row items-start md:items-center gap-8'>
-        <div class='flex items-center gap-5'>
+<article class="v0-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Hi, I&#39;m void0ps.
+      </h1>
+      <p class="hero-bio">
+        一个热爱网络安全的研究员，专注于 Web 渗透、红队行动、免杀对抗。喜欢在数字世界的边缘游走，探索未知的漏洞与防御机制。
+      </p>
+      <div class="social-links">
+        
+          
+            
+            
+              <a href="https://github.com/%e4%bd%a0%e7%9a%84%e7%94%a8%e6%88%b7%e5%90%8d" class="social-btn" target="_blank" rel="noopener">
+                
+                  Github
+                
+              </a>
+            
+          
+            
+            
+              <a href="https://twitter.com/%e4%bd%a0%e7%9a%84%e7%94%a8%e6%88%b7%e5%90%8d" class="social-btn" target="_blank" rel="noopener">
+                
+                  Twitter
+                
+              </a>
+            
+          
+        
+      </div>
+    </div>
+    <div class="hero-avatar-container">
+      <div class="avatar-frame">
+        <div class="avatar-inner">
           
             
             
@@ -700,149 +398,43 @@
               
                 
                   <img
-                    src='/me_hu_c8e801f91beb01f5.jpg'
-                    width='200'
-                    height='200'
-                    alt='Void0ps'
-                    class='h-16 w-16 rounded-full border border-neutral-700/80 shadow-[0_18px_45px_rgba(0,0,0,0.95)] object-cover' />
+                    src="/me_hu_4aaa5ad8b1586c7d.jpg"
+                    width="280"
+                    height="280"
+                    alt="Void0ps"
+                    class="hero-avatar-img" />
                 
               
             
           
-
-          <div>
-            <p class='text-xs font-mono tracking-[0.3em] uppercase text-primary-300 mb-2'>
-              Digital Garden
-            </p>
-            <h1 class='text-3xl md:text-4xl font-extrabold text-neutral-50 leading-tight'>
-              
-                Void0ps
-              
-            </h1>
-            
-              <p class='mt-1 text-sm text-neutral-400'>
-                这里是我的赛博自留地
-              </p>
-            
-          </div>
         </div>
-
-        <div class='md:flex-1 md:max-w-xl'>
-          <p
-            class='sidebar-typewriter text-base sm:text-lg md:text-xl text-neutral-200 font-light leading-relaxed'
-            data-text='Exploring offensive security, exploit development and algorithmic thinking.'>
-            Exploring offensive security, exploit development and algorithmic thinking.
-          </p>
-        </div>
-      </div>
-
-      <div class='mt-8 flex flex-wrap items-center gap-4 text-lg text-neutral-300/90'>
-        
-  <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
-    
-      
-        <a
-          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
-          href="github"
-          target="_blank"
-          aria-label="Icon"
-          title="Icon"
-          rel="me noopener noreferrer"
-          ><span class="inline-block align-text-bottom"></span></a
-        >
-      
-        <a
-          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
-          href="https://github.com/%e4%bd%a0%e7%9a%84%e7%94%a8%e6%88%b7%e5%90%8d"
-          target="_blank"
-          aria-label="Link"
-          title="Link"
-          rel="me noopener noreferrer"
-          ><span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M172.5 131.1C228.1 75.51 320.5 75.51 376.1 131.1C426.1 181.1 433.5 260.8 392.4 318.3L391.3 319.9C381 334.2 361 337.6 346.7 327.3C332.3 317 328.9 297 339.2 282.7L340.3 281.1C363.2 249 359.6 205.1 331.7 177.2C300.3 145.8 249.2 145.8 217.7 177.2L105.5 289.5C73.99 320.1 73.99 372 105.5 403.5C133.3 431.4 177.3 435 209.3 412.1L210.9 410.1C225.3 400.7 245.3 404 255.5 418.4C265.8 432.8 262.5 452.8 248.1 463.1L246.5 464.2C188.1 505.3 110.2 498.7 60.21 448.8C3.741 392.3 3.741 300.7 60.21 244.3L172.5 131.1zM467.5 380C411 436.5 319.5 436.5 263 380C213 330 206.5 251.2 247.6 193.7L248.7 192.1C258.1 177.8 278.1 174.4 293.3 184.7C307.7 194.1 311.1 214.1 300.8 229.3L299.7 230.9C276.8 262.1 280.4 306.9 308.3 334.8C339.7 366.2 390.8 366.2 422.3 334.8L534.5 222.5C566 191 566 139.1 534.5 108.5C506.7 80.63 462.7 76.99 430.7 99.9L429.1 101C414.7 111.3 394.7 107.1 384.5 93.58C374.2 79.2 377.5 59.21 391.9 48.94L393.5 47.82C451 6.731 529.8 13.25 579.8 63.24C636.3 119.7 636.3 211.3 579.8 267.7L467.5 380z"/></svg>
-</span></span></a
-        >
-      
-    
-      
-        <a
-          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
-          href="twitter"
-          target="_blank"
-          aria-label="Icon"
-          title="Icon"
-          rel="me noopener noreferrer"
-          ><span class="inline-block align-text-bottom"></span></a
-        >
-      
-        <a
-          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
-          href="https://twitter.com/%e4%bd%a0%e7%9a%84%e7%94%a8%e6%88%b7%e5%90%8d"
-          target="_blank"
-          aria-label="Link"
-          title="Link"
-          rel="me noopener noreferrer"
-          ><span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M172.5 131.1C228.1 75.51 320.5 75.51 376.1 131.1C426.1 181.1 433.5 260.8 392.4 318.3L391.3 319.9C381 334.2 361 337.6 346.7 327.3C332.3 317 328.9 297 339.2 282.7L340.3 281.1C363.2 249 359.6 205.1 331.7 177.2C300.3 145.8 249.2 145.8 217.7 177.2L105.5 289.5C73.99 320.1 73.99 372 105.5 403.5C133.3 431.4 177.3 435 209.3 412.1L210.9 410.1C225.3 400.7 245.3 404 255.5 418.4C265.8 432.8 262.5 452.8 248.1 463.1L246.5 464.2C188.1 505.3 110.2 498.7 60.21 448.8C3.741 392.3 3.741 300.7 60.21 244.3L172.5 131.1zM467.5 380C411 436.5 319.5 436.5 263 380C213 330 206.5 251.2 247.6 193.7L248.7 192.1C258.1 177.8 278.1 174.4 293.3 184.7C307.7 194.1 311.1 214.1 300.8 229.3L299.7 230.9C276.8 262.1 280.4 306.9 308.3 334.8C339.7 366.2 390.8 366.2 422.3 334.8L534.5 222.5C566 191 566 139.1 534.5 108.5C506.7 80.63 462.7 76.99 430.7 99.9L429.1 101C414.7 111.3 394.7 107.1 384.5 93.58C374.2 79.2 377.5 59.21 391.9 48.94L393.5 47.82C451 6.731 529.8 13.25 579.8 63.24C636.3 119.7 636.3 211.3 579.8 267.7L467.5 380z"/></svg>
-</span></span></a
-        >
-      
-    
-  </div>
-
-
       </div>
     </div>
   </section>
 
-  <section class='mt-4'>
-    <div class='flex justify-between items-end mb-8'>
-      <h2 class='text-2xl font-bold text-neutral-50'>Latest</h2>
-      <a href='/posts/' class='text-sm text-neutral-400 hover:text-neutral transition-colors'>
-        View all
-      </a>
-    </div>
-
-    <div class='space-y-6'>
+  <section class="posts-section">
+    <h2 class="section-title">// 最新情报 [Recent_Logs]</h2>
+    <div class="posts-grid">
       
         
         
           
         
-
-        <article class='bg-neutral-800/80 p-6 md:p-8 rounded-xl border border-transparent hover:border-neutral-600 transition-all cursor-pointer group shadow-sm hover:shadow-md hover:bg-neutral-800/90'>
-          <header class='flex flex-col gap-2 mb-3'>
-            <div class='flex flex-wrap gap-3 text-xs font-medium text-neutral-500 uppercase tracking-wider'>
-              
-                <span class='text-primary-400 hover:underline'>
-                  Security
-                </span>
-                <span>•</span>
-              
-              <span>November 20, 2025</span>
-              <span>•</span>
-              <span>1&nbsp;min read</span>
-            </div>
-            <h3 class='text-2xl font-bold text-neutral-50 group-hover:text-primary-300 transition-colors leading-tight'>
-              <a href='/posts/zero-day-vulnerability-analysis/' class='not-prose'>
-                Zero-Day Vulnerability Analysis
-              </a>
-            </h3>
-          </header>
-
-          <p class='text-neutral-400 mb-6 leading-relaxed line-clamp-2'>
+        <article class="post-card">
+          <h3 class="post-title">
+            <a href="/posts/zero-day-vulnerability-analysis/">
+              Zero-Day Vulnerability Analysis
+            </a>
+          </h3>
+          <div class="post-meta">
+            2025-11-20
+             | #Security
+          </div>
+          <p class="post-summary line-clamp-2">
             在这篇示例文章中，我们会用一个堆溢出（Heap Overflow）0day 为例， 演示你当前博客主题在文章页的显示效果。
 这篇文章主要是为了预览样式，而不是一篇严肃的安全研究报告。 你可以在此基础上修改内容，保留布局和排版。
-1. What is a Zero-Day?#在安全圈里，Zero-Day 通常指：
-软件存在一个严重缺陷（漏洞）， 厂商和公众都还不知道， 因此也不存在补丁或签名规则， 攻击者可以在“防御窗口打开之前”静默利用它。 这也是为什么 0day 经常被用在高价值目标、APT 行动或高奖金漏洞赏金计划中。
-2. Heap Overflow 基本形态#下面是一段极简的、典型教科书级别的堆溢出示例代码：
-1#include &lt;stdlib.h&gt; 2#include &lt;string.h&gt; 3 4int main(int argc, char **argv) { 5 char *buf; 6 buf = (char *)malloc(1024); 7 strcpy(buf, argv[1]); // No bounds check! 8 return 0; 9} 关键点：
-buf 在堆上分配了固定大小（1024 字节）； strcpy 不做边界检查，直接把 argv[1] 填进去； 如果传入一个超过 1024 字节的字符串，就会覆盖相邻的堆元数据结构。 在真实世界中，堆管理器（ptmalloc, jemalloc, tcmalloc 等）会在用户数据前后 维护各种 size / fd / bk / tcache 等元数据，一旦被覆盖，就有机会：
-
+1. …
           </p>
-
-          <footer class='flex items-center text-sm font-medium text-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300'>
-            Read Article
-            <span class='ml-1'>→</span>
-          </footer>
         </article>
       
     </div>
@@ -989,6 +581,132 @@ buf 在堆上分配了固定大小（1024 字节）； strcpy 不做边界检查
           }
         }
         tick();
+      })();
+
+      (function () {
+        var overlay = document.getElementById('loader-overlay');
+        if (!overlay) return;
+
+        var body = document.body;
+        var isHome = body && body.classList.contains('layout-home');
+
+        
+        if (!isHome) {
+          overlay.parentNode.removeChild(overlay);
+          return;
+        }
+
+        try {
+          if (window.sessionStorage && sessionStorage.getItem('v0_loader_shown') === '1') {
+            overlay.parentNode.removeChild(overlay);
+            return;
+          }
+        } catch (e) {
+          
+        }
+
+        var logContainer = document.getElementById('boot-log');
+        var blocksContainer = document.getElementById('progress-blocks-container');
+        var progressText = document.getElementById('progress-pct');
+        var accessMsg = document.getElementById('access-msg');
+
+        var bootLogs = [
+          'Initializing kernel...',
+          'Loading modules: [crypto, net, fs]...',
+          'Bypassing mainframe firewall...',
+          '<span class="log-success">[OK]</span> Root access established',
+          'Mounting file system /dev/sda1...',
+          'Decrypting user interface config...',
+          'Scanning for vulnerabilities...',
+          '<span class="log-warn">[WARN]</span> Intrusion detection system disabled',
+          'Loading graphical shell...',
+          'Executing startup script: ./init_blog.sh...'
+        ];
+
+        var TOTAL_BLOCKS = 20;
+
+        function initBlocks() {
+          if (!blocksContainer) return;
+          blocksContainer.innerHTML = '';
+          for (var i = 0; i < TOTAL_BLOCKS; i++) {
+            var block = document.createElement('div');
+            block.className = 'progress-block';
+            blocksContainer.appendChild(block);
+          }
+        }
+
+        function updateBlocks(percent) {
+          if (!blocksContainer) return;
+          var blocksToFill = Math.floor((percent / 100) * TOTAL_BLOCKS);
+          var blocks = blocksContainer.children;
+          for (var i = 0; i < blocks.length; i++) {
+            if (i < blocksToFill) {
+              blocks[i].classList.add('active');
+            }
+          }
+        }
+
+        function startLoader() {
+          initBlocks();
+
+          var progress = 0;
+          var logIndex = 0;
+
+          var progressInterval = window.setInterval(function () {
+            progress += Math.random() * 5 + 1;
+            if (progress > 100) progress = 100;
+            updateBlocks(progress);
+            if (progressText) {
+              progressText.innerText = String(Math.floor(progress)) + '%';
+            }
+            if (progress === 100) {
+              window.clearInterval(progressInterval);
+              finishLoading();
+            }
+          }, 40);
+
+          var logInterval = window.setInterval(function () {
+            if (!logContainer) {
+              window.clearInterval(logInterval);
+              return;
+            }
+            if (logIndex < bootLogs.length) {
+              var line = document.createElement('div');
+              line.className = 'log-line';
+              line.innerHTML = '&gt; ' + bootLogs[logIndex];
+              logContainer.appendChild(line);
+              logContainer.scrollTop = logContainer.scrollHeight;
+              logIndex++;
+            } else {
+              window.clearInterval(logInterval);
+            }
+          }, 90);
+        }
+
+        function finishLoading() {
+          if (!overlay) return;
+          window.setTimeout(function () {
+            if (accessMsg) {
+              accessMsg.style.display = 'block';
+            }
+            window.setTimeout(function () {
+              overlay.style.transition = 'opacity 0.4s ease-out';
+              overlay.style.opacity = '0';
+            }, 600);
+            window.setTimeout(function () {
+              overlay.style.display = 'none';
+            }, 1000);
+          }, 120);
+          try {
+            if (window.sessionStorage) {
+              sessionStorage.setItem('v0_loader_shown', '1');
+            }
+          } catch (e) {
+            
+          }
+        }
+
+        window.addEventListener('load', startLoader);
       })();
     </script>
   </body>
